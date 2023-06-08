@@ -8,6 +8,8 @@
 import UIKit
 class ProfileHeaderView: UIView {
     
+    private var statusText: String = " "
+
     private let titleName: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -54,8 +56,8 @@ class ProfileHeaderView: UIView {
         return label
     }()
     
-    let textField: UITextField = {
-        let textField = UITextField()
+    let textField: TextFieldWithPadding = {
+        let textField = TextFieldWithPadding()
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 12
         textField.minimumFontSize = 15
@@ -76,8 +78,6 @@ class ProfileHeaderView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private var statusText: String = " "
     
     override func layoutSubviews() {
         super.layoutSubviews()
