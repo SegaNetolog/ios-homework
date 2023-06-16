@@ -6,7 +6,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDelegate {
+class ProfileViewController: UIViewController {
     
     private let post = Post.createPost()
 
@@ -32,9 +32,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     private func addSubviews(){
         view.addSubview(tableView)
     }
+    
+    private func setupContraints() {
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
 }
 
-extension ProfileViewController: UITableViewDataSource {
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         post.count
     }
@@ -56,19 +65,3 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
-extension UIView {
-    static var identifier: String {
-        String(describing: self)
-    }
-}
-
-extension ProfileViewController {
-    private func setupContraints() {
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-    }
-}

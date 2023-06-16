@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let tabBarController = UITabBarController()
             UITabBar.appearance().backgroundColor = .white
             UITabBar.appearance().unselectedItemTintColor = .black
-            tabBarController.viewControllers = [createFeedViewController(), createProfileViewController()]
+            tabBarController.viewControllers = [createFeedViewController(), createLoginViewController()]
             return tabBarController
         }
         
@@ -33,8 +33,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = createTabBarController()
         window?.makeKeyAndVisible()
         
+        
+        func createLoginViewController() -> UINavigationController {
+            let logInViewController = LogInViewController()
+            logInViewController.title = "Логин"
+            logInViewController.tabBarItem = UITabBarItem(title: "Логин", image: UIImage(systemName: "doc.richtext"), tag: 0)
+            return UINavigationController(rootViewController: logInViewController)
+        }
+        
         func createFeedViewController() -> UINavigationController {
-            let feedViewController = LogInViewController()
+            let feedViewController = FeedViewController()
             feedViewController.title = "User feed"
             feedViewController.tabBarItem = UITabBarItem(title: "User feed", image: UIImage(systemName: "doc.richtext"), tag: 0)
             return UINavigationController(rootViewController: feedViewController)

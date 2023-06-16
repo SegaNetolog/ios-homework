@@ -85,8 +85,9 @@ class ProfileHeaderView: UIView {
     
     @objc func btnTap() {
         print( textField.text ?? "Get status")
+        titleStatus.text = textField.text
     }
-    
+        
     func subview() {
         addSubview(imageView)
         addSubview(titleName)

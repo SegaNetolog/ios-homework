@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B01D6D32A3C517200F3A256 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B01D6D22A3C517200F3A256 /* Ext+UIView.swift */; };
 		0BA59B072A39823F007295E0 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA59B062A39823F007295E0 /* PostTableViewCell.swift */; };
 		0BC579A52A32830700A07598 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC579A42A32830700A07598 /* LogInViewController.swift */; };
 		0BC579A72A3286C500A07598 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC579A62A3286C500A07598 /* TextFieldWithPadding.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B01D6D22A3C517200F3A256 /* Ext+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
 		0BA59B062A39823F007295E0 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		0BC579A42A32830700A07598 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		0BC579A62A3286C500A07598 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				CEF218442A0EFCC300475B3E /* FeedViewController.swift */,
 				CEF218482A0EFCFF00475B3E /* PostViewController.swift */,
 				CEF2184A2A0EFD1D00475B3E /* Post.swift */,
+				0B01D6D22A3C517200F3A256 /* Ext+UIView.swift */,
 				0BC579A62A3286C500A07598 /* TextFieldWithPadding.swift */,
 			);
 			path = Navigation;
@@ -166,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B01D6D32A3C517200F3A256 /* Ext+UIView.swift in Sources */,
 				0BA59B072A39823F007295E0 /* PostTableViewCell.swift in Sources */,
 				CEF218492A0EFCFF00475B3E /* PostViewController.swift in Sources */,
 				CEF218352A0EF74900475B3E /* InfoViewController.swift in Sources */,
