@@ -50,14 +50,14 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private let  seporatorForm: UIView = {
+    private let  seporatorLine: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray4
         return view
     }()
     
-    private let stackTextField: UIStackView = {
+    private let stackAutorization: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 10
@@ -124,10 +124,10 @@ class LogInViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(logo)
-        contentView.addSubview(stackTextField)
-        stackTextField.addArrangedSubview(loginTextField)
-        stackTextField.addArrangedSubview(seporatorForm)
-        stackTextField.addArrangedSubview(passwordTextField)
+        contentView.addSubview(stackAutorization)
+        stackAutorization.addArrangedSubview(loginTextField)
+        stackAutorization.addArrangedSubview(seporatorLine)
+        stackAutorization.addArrangedSubview(passwordTextField)
         contentView.addSubview(loginButton)
         
         NSLayoutConstraint.activate([
@@ -135,12 +135,11 @@ class LogInViewController: UIViewController {
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             logo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
@@ -148,23 +147,29 @@ class LogInViewController: UIViewController {
             logo.heightAnchor.constraint(equalToConstant: 100),
             logo.widthAnchor.constraint(equalToConstant: 100),
             
+            loginTextField.topAnchor.constraint(equalTo: stackAutorization.topAnchor),
+            loginTextField.leadingAnchor.constraint(equalTo: stackAutorization.leadingAnchor),
+            loginTextField.widthAnchor.constraint(equalTo: stackAutorization.widthAnchor),
             loginTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            passwordTextField.topAnchor.constraint(equalTo: seporatorForm.bottomAnchor, constant: 0),
+            passwordTextField.topAnchor.constraint(equalTo: seporatorLine.bottomAnchor, constant: 0),
+            passwordTextField.leadingAnchor.constraint(equalTo: stackAutorization.leadingAnchor),
             passwordTextField.heightAnchor.constraint(equalToConstant: 49),
+            passwordTextField.widthAnchor.constraint(equalTo: stackAutorization.widthAnchor),
             
-            seporatorForm.topAnchor.constraint(equalTo: loginTextField.bottomAnchor, constant: 0),
-            seporatorForm.heightAnchor.constraint(equalToConstant: 1),
-            seporatorForm.widthAnchor.constraint(equalToConstant:  view.frame.width - 32),
-            
-            stackTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 120),
-            passwordTextField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            passwordTextField.widthAnchor.constraint(equalToConstant:  view.frame.width - 32),
-            
-            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
-            loginButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            seporatorLine.topAnchor.constraint(equalTo: loginTextField.bottomAnchor, constant: 0),
+            seporatorLine.leadingAnchor.constraint(equalTo: stackAutorization.leadingAnchor),
+            seporatorLine.heightAnchor.constraint(equalToConstant: 1),
+            seporatorLine.widthAnchor.constraint(equalTo: stackAutorization.widthAnchor),
+           
+            stackAutorization.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 120),
+            stackAutorization.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackAutorization.widthAnchor.constraint(equalToConstant:  view.frame.width - 32),
+
+            loginButton.topAnchor.constraint(equalTo: stackAutorization.bottomAnchor, constant: 40),
+            loginButton.centerXAnchor.constraint(equalTo: stackAutorization.centerXAnchor),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
-            loginButton.widthAnchor.constraint(equalToConstant:  view.frame.width - 32),
+            loginButton.widthAnchor.constraint(equalTo: stackAutorization.widthAnchor),
             loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
