@@ -8,13 +8,8 @@
 import UIKit
 class ProfileHeaderView: UIView {
     
-    private var leadingImageView = NSLayoutConstraint()
-    private var trailingImageView = NSLayoutConstraint()
-    private var topImageView = NSLayoutConstraint()
-    private var widthImageView = NSLayoutConstraint()
-    private var heightImageView = NSLayoutConstraint()
-    private var heightWrapView = NSLayoutConstraint()
-    
+    var xPositionAvatar = Int()
+    var yPositionAvatar = Int()
     private var statusLabel: String = ""
     private var setStatusButton: UIButton!
     private let avatarLayView: UIView = {
@@ -23,15 +18,15 @@ class ProfileHeaderView: UIView {
         return view
     }()
     
-    private let wrapView: UIView = {
+    let vc = ProfileViewController()
+    
+    private lazy var wrapView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .black
-        view.layer.opacity = 0.5
-        view.isHidden = true
+        view.layer.opacity = 0
         return view
     }()
-    
     
     private lazy var closeBigBin: UIImageView = {
         let imageView = UIImageView()
@@ -43,12 +38,12 @@ class ProfileHeaderView: UIView {
         imageView.isUserInteractionEnabled = true
         imageView.layer.opacity = 0
         imageView.tintColor = .white
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCloseGesture)))
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeAnimation)))
         return imageView
     }()
     
     private var statusText: String = " "
-
+    
     private let titleName: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -69,10 +64,8 @@ class ProfileHeaderView: UIView {
         button.layer.shadowColor = UIColor.black.cgColor
         button.addTarget(self, action: #selector(btnTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-
         return button
     }()
-    
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -84,8 +77,8 @@ class ProfileHeaderView: UIView {
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isUserInteractionEnabled = true
-
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openBigBin)))
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openAnimation)))
+        
         return imageView
     }()
     
@@ -130,111 +123,84 @@ class ProfileHeaderView: UIView {
         print( textField.text ?? "Get status")
         titleStatus.text = textField.text
     }
-        
+    
     func subview() {
         addSubview(titleName)
         addSubview(titleStatus)
         addSubview(button)
         addSubview(textField)
-        addSubview(avatarLayView)
         addSubview(wrapView)
         addSubview(imageView)
         addSubview(closeBigBin)
     }
     
     func constrains() {
-        
-        
-        leadingImageView = imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
-        topImageView = imageView.topAnchor.constraint(equalTo: topAnchor,constant: 16)
-        widthImageView = imageView.widthAnchor.constraint(equalToConstant: 95)
-        heightImageView = imageView.heightAnchor.constraint(equalToConstant: 95)
-        NSLayoutConstraint.activate([leadingImageView, topImageView, widthImageView, heightImageView])
-        
-        heightWrapView = wrapView.heightAnchor.constraint(equalToConstant: 0)
-        NSLayoutConstraint.activate([heightWrapView])
-        
         NSLayoutConstraint.activate([
             
-            wrapView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            wrapView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            wrapView.topAnchor.constraint(equalTo: topAnchor),
-            
-            closeBigBin.widthAnchor.constraint(equalToConstant: 30),
-            closeBigBin.heightAnchor.constraint(equalToConstant: 30),
-            closeBigBin.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            closeBigBin.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            
-            avatarLayView.widthAnchor.constraint(equalToConstant: 95),
-            avatarLayView.heightAnchor.constraint(equalToConstant: 95),
-            avatarLayView.topAnchor.constraint(equalTo: topAnchor,constant: 16),
-            avatarLayView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 16),
+            titleName.leadingAnchor.constraint(equalTo: imageView.trailingAnchor,constant: 10),
+            titleName.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            titleName.widthAnchor.constraint(equalToConstant: 190),
             
             button.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 15),
             button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             button.heightAnchor.constraint(equalToConstant: 50),
             button.bottomAnchor.constraint(equalTo: bottomAnchor,constant:  -25),
-           
+            
             titleStatus.leadingAnchor.constraint(equalTo: titleName.leadingAnchor),
             titleStatus.topAnchor.constraint(equalTo: titleName.bottomAnchor, constant: 15),
             titleStatus.widthAnchor.constraint(equalToConstant: 170),
-          
-            titleName.leadingAnchor.constraint(equalTo: avatarLayView.trailingAnchor, constant: 10),
-            titleName.topAnchor.constraint(equalTo: topAnchor, constant: 30),
-            titleName.widthAnchor.constraint(equalToConstant: 190),
-        
+            
+            imageView.leadingAnchor.constraint(equalTo: button.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: titleName.topAnchor, constant: 0),
+            imageView.widthAnchor.constraint(equalToConstant: 100),
+            imageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            
+            
             textField.topAnchor.constraint(equalTo: titleStatus.bottomAnchor, constant: 12),
             textField.heightAnchor.constraint(equalToConstant: 50),
             textField.widthAnchor.constraint(equalToConstant: 210),
             textField.leadingAnchor.constraint(equalTo: titleName.leadingAnchor),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            
+            closeBigBin.widthAnchor.constraint(equalToConstant: 30),
+            closeBigBin.heightAnchor.constraint(equalToConstant: 30),
+            closeBigBin.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            closeBigBin.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
         ])
     }
-    @objc private func openBigBin() {
-        UIView.animateKeyframes(withDuration: 0.8, delay: 0) {
-            
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.6) {
-                
-                self.widthImageView.constant = UIScreen.main.bounds.width
-                self.leadingImageView.constant = 0
-                self.trailingImageView.constant = 0
-                self.topImageView.constant = 100
-                self.heightImageView.constant = self.widthImageView.constant
-                self.heightWrapView.constant =  UIScreen.main.bounds.height
-                self.imageView.layer.cornerRadius = 0
-//                self.imageView.centerYAnchor.constraint(equalTo: self.wrapView.centerYAnchor)
-                self.wrapView.isHidden = false
-            }
-            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.8) {
-                self.closeBigBin.layer.opacity = 1
-                self.wrapView.layer.opacity = 0.3
 
-            }
-        }
+    @objc private func openAnimation() {
         
+        self.wrapView.layer.frame = CGRect(x: 0, y: 0, width: self.vc.view.layer.frame.width, height: self.vc.view.layer.frame.height)
+      
+        xPositionAvatar = Int(self.imageView.layer.frame.minX)
+        yPositionAvatar = Int(self.imageView.layer.frame.minY)
+
+        let avatarAnimator = UIViewPropertyAnimator(duration: 0.5, curve: .linear) { [self] in
+            self.imageView.layer.frame = CGRect(x: 0, y: 0, width: self.vc.view.layer.frame.width, height: self.vc.view.layer.frame.width)
+
+            self.imageView.center = vc.view.center
+            self.imageView.layer.zPosition = 1
+            self.imageView.layer.cornerRadius = 0
+            self.wrapView.alpha = 0.8
+        }
+        avatarAnimator.startAnimation()
+  
+        let crossAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .linear) {
+            self.closeBigBin.alpha = 1
+        }
+        crossAnimator.startAnimation(afterDelay: 0.5)
     }
     
-    @objc private func tapCloseGesture() {
-        
-        UIView.animateKeyframes(withDuration: 0.4, delay: 0) {
-            
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.1) {
-                self.closeBigBin.layer.opacity = 0
-                self.wrapView.layer.opacity = 0
-            }
-            
-            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.1) {
-                self.wrapView.isHidden = false
-                self.wrapView.isHidden = true
-                self.imageView.layer.cornerRadius = 50
-                self.widthImageView.constant = 95
-                self.leadingImageView.constant = 16
-                self.trailingImageView.constant = 30
-                self.topImageView.constant = 16
-                self.heightImageView.constant = 95
-                self.heightWrapView.constant =  UIScreen.main.bounds.height
-            }
+    @objc private func closeAnimation() {
+        let animator = UIViewPropertyAnimator(duration: 0.5, curve: .linear) {
+            self.wrapView.alpha = 0
+            self.closeBigBin.alpha = 0
+            self.imageView.layer.frame = CGRect(x: self.xPositionAvatar, y: self.yPositionAvatar, width: 100, height: 100)
+            self.imageView.layer.cornerRadius = self.imageView.frame.size.width / 2
         }
+        animator.startAnimation()
     }
 }
