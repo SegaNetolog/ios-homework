@@ -85,8 +85,9 @@ class ProfileHeaderView: UIView {
     
     @objc func btnTap() {
         print( textField.text ?? "Get status")
+        titleStatus.text = textField.text
     }
-    
+        
     func subview() {
         addSubview(imageView)
         addSubview(titleName)
@@ -101,7 +102,7 @@ class ProfileHeaderView: UIView {
             button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             button.heightAnchor.constraint(equalToConstant: 50),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor,constant:  -25),
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             imageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             imageView.widthAnchor.constraint(equalToConstant: 120),

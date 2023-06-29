@@ -8,7 +8,6 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
-    
     @IBAction func pushAddAction (_ sender: Any) {
         let alertController = UIAlertController (title: "Post", message: "message", preferredStyle: .alert)
         let alertAction1 = UIAlertAction(title: "Написать новый пост!", style: .default) { _ in
