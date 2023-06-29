@@ -9,11 +9,16 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
-    private let likes: UILabel = {
+    var tapHandler: (() -> Void)? = nil
+    var tapLikes: (() -> Void)? = nil
+    
+    private lazy var likes: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelTapped)))
+        label.isUserInteractionEnabled = true
         return label
         
     }()
@@ -43,11 +48,12 @@ class PostTableViewCell: UITableViewCell {
         return view
     }()
     
-    private let postImage: UIImageView = {
+    private lazy var postImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showDetailPost)))
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     private let authorName: UILabel = {
@@ -118,4 +124,12 @@ class PostTableViewCell: UITableViewCell {
             views.bottomAnchor.constraint(equalTo: likes.bottomAnchor)
         ])
     }
+    @objc func showDetailPost() {
+        if let action = self.tapHandler { action() }
+    }
+    
+    @objc func labelTapped() {
+        if let action = self.tapLikes { action() }
+    }
+    
 }

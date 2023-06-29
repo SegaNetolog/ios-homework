@@ -120,9 +120,18 @@ class ProfileHeaderView: UIView {
     }
     
     @objc func btnTap() {
-        print( textField.text ?? "Get status")
-        titleStatus.text = textField.text
+        if textField.text  == "" {
+            textField.backgroundColor = .systemRed
+            textField.shake()
+        } else {
+            titleStatus.text = textField.text
+            textField.backgroundColor = .white
+
+            print(textField.text ?? "")
+
+        }
     }
+    
     
     func subview() {
         addSubview(titleName)
