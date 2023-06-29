@@ -99,6 +99,14 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    private lazy var messageForm: UILabel = {
+        let label = UILabel()
+        label.textColor = .systemGray3
+        label.numberOfLines = 0
+        label.font = UIFont.italicSystemFont(ofSize: label.font.pointSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -175,7 +183,43 @@ class LogInViewController: UIViewController {
     }
     
         @objc private func pushLogin() {
-        navigationController?.pushViewController(ProfileViewController(), animated: true)
+                
+                guard let loginText  = loginTextField.text else {
+                    return
+                }
+                guard let passwordText  = passwordTextField.text else {
+                    return
+                }
+                
+                var loginAlert = false
+                    if loginText == "login" && passwordText == "password" {
+                         loginAlert = false
+                        navigationController?.pushViewController(ProfileViewController(), animated: true)
+                    } else {
+                         loginAlert = true
+                        if loginText.count == 0 {
+                            loginTextField.backgroundColor = .systemRed
+                            loginTextField.shake()
+                             loginAlert = false
+                        }
+                        
+                        if passwordText.count == 0 {
+                            passwordTextField.backgroundColor = .systemRed
+                            passwordTextField.shake()
+                            loginAlert = false
+                        } else if passwordText.count < 6 {
+                            messageForm.text = "Пароль должен быть длинее 5 символов"
+                            loginAlert = false
+                        }
+                    }
+                
+                if loginAlert {
+                    showAlert(title: "Ошибка авторизации", message: "Неверный логин или пароль")
+                    passwordTextField.text = ""
+                }
+            
+            
+            
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {

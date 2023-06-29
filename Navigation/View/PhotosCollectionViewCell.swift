@@ -9,14 +9,18 @@ import UIKit
 
 final class PhotosCollectionViewCell: UICollectionViewCell {
     
-    private let imageView: UIImageView = {
+    weak var delegate: CustomCellDelegate?
+    private var indexPathCell = IndexPath()
+
+     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openAnimation)))
         return imageView
     }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,14 +36,13 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
     private func setupCell() {
     }
     
-
-    
     private func setupContraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
         ])
     }
     
@@ -47,9 +50,19 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
         imageView.image = UIImage(named: model.image)
     }
     
-    
     private func addSubviews(){
         contentView.addSubview(imageView)
     }
     
+    func setIndexPath(_ indexPath: IndexPath) {
+        indexPathCell = indexPath
+    }
+ 
+    @objc private func openAnimation() {
+        delegate?.pushImage(imageView.image, frameImage: imageView.frame, indexPath: indexPathCell)
+    }
+}
+
+protocol CustomCellDelegate: AnyObject {
+    func pushImage(_ image: UIImage?, frameImage: CGRect, indexPath: IndexPath)
 }

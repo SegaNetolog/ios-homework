@@ -8,7 +8,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private let post = Post.createPost()
+    private var post = Post.createPost()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -66,6 +66,23 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         } else  {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
             cell.setupCell(model: post[indexPath.row])
+            
+            cell.tapHandler = {
+                let detailModalPostVC = DetailModalPostVC()
+                self.post[indexPath.item].views += 1
+                self.tableView.reloadData()
+                detailModalPostVC.detailPost = self.post[indexPath.item]
+                detailModalPostVC.parentNavigationControler = self.navigationController
+                self.navigationController?.present(detailModalPostVC, animated: true)
+            }
+            
+            cell.tapLikes = {
+                    self.post[indexPath.item].likes += 1
+                    self.tableView.reloadData()
+                
+            }
+            
+            
             return cell
         }
     }
